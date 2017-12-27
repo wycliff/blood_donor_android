@@ -23,6 +23,12 @@ import wycliffe.com.bdf.R;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    /*===========================Session and drawer =================================================*/
+    // Session Manager Class
+    public SessionManager session;
+
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -42,6 +48,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+/*============================================== Shared preference applied here====================================================*/
+        // Session class instance . very important.
+        session = new SessionManager(getApplicationContext());
+
+        //For testing purposes.
+//        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+
+        //bug fix
+        if(session.isLoggedIn()==false){
+
+            //Killer
+           // MainActivity.this.finish();
+        }
+
+        /**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity if he/she is not
+         * logged in. Very  Important
+         * */
+      //  session.checkLogin();
+/*=====================================================================================================================================*/
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
