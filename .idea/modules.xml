@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BDF.iml" filepath="$PROJECT_DIR$/BDF.iml" />
+      <module fileurl="file://C:\Users\Castles\AndroidStudioProjects\bdf\BDF.iml" filepath="C:\Users\Castles\AndroidStudioProjects\bdf\BDF.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Castles\AndroidStudioProjects\bdf\app\app.iml" filepath="C:\Users\Castles\AndroidStudioProjects\bdf\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bdf.iml" filepath="$PROJECT_DIR$/bdf.iml" />
     </modules>
   </component>
 </project>
