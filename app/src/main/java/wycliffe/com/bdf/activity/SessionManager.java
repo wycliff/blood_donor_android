@@ -74,7 +74,7 @@ public class SessionManager {
     /**
      * Get stored session data
      * */
-    public HashMap<String, String> getAgentDetails(){
+    public HashMap<String, String> getDonorDetails(){
 
         HashMap<String, String> user = new HashMap<String, String>();
         // user name

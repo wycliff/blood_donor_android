@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         if(session.isLoggedIn()==false){
 
             //Killer
-           // MainActivity.this.finish();
+            MainActivity.this.finish();
         }
 
         /**
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
          * This will redirect user to LoginActivity if he/she is not
          * logged in. Very  Important
          * */
-      //  session.checkLogin();
+        session.checkLogin();
 /*=====================================================================================================================================*/
 
 

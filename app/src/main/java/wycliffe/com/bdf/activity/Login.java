@@ -1,5 +1,6 @@
 package wycliffe.com.bdf.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wycliffe.com.bdf.R;
+import wycliffe.com.bdf.model.LoginModel;
+import wycliffe.com.bdf.rest.ApiClient;
+import wycliffe.com.bdf.rest.LoginApiInterface;
 
 public class Login extends AppCompatActivity {
 
@@ -24,6 +32,8 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
     CheckBox cbShowPassword;
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
+    String email, password;
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -87,6 +97,97 @@ public class Login extends AppCompatActivity {
 //        etEmail.addTextChangedListener(new MyTextWatcher(etEmail));
 //        etPassword.addTextChangedListener(new MyTextWatcher(etPassword));
 
+//============== REST
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //saving them into a String
+                email = etEmail.getText().toString().trim();
+                password = etPassword.getText().toString().trim();
+
+                if(email.trim().length() > 0 && password.trim().length() > 0) {
+
+
+                //=========================================================  connection to the API
+
+                progressDialog = new ProgressDialog(Login.this);
+                progressDialog.setMax(100);
+                progressDialog.setMessage("Its loading....");
+                progressDialog.setTitle("Fetching Server Data");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.show();
+
+
+
+                    //prepare call in retrofit 2.0
+                    // get type retrofit object stored into service.
+                    LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class);
+
+
+                    // Giving it the info from the edit text views.
+                    Call<LoginModel> call = apiService.getLogged(email,password);
+
+                    call.enqueue(new Callback<LoginModel>() {
+                        @Override
+                        public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
+
+                            if(response.code()==200) {
+
+
+                                String emailResponse = response.body().getEmail();
+                                Toast.makeText(Login.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            else {
+
+                                Toast.makeText(Login.this, " Some code ", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<LoginModel> call, Throwable t) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+
+
+
+
+
+
+
+                }else{
+                    //Toast.makeText(Login.this,"Email/ Password fields cannot be empty",Toast.LENGTH_LONG).show();
+
+                    //Setting error on view
+                    if(email.trim().length() <= 0 && password.trim().length() <= 0) {
+                        inputLayoutEmail.setError("Email field cannot be empty");
+                        inputLayoutPassword.setError("Password Required");
+                    }
+                    else if(password.trim().length() <= 0) {
+                        inputLayoutPassword.setError("Password Required");
+                    }
+                    else{
+                        inputLayoutEmail.setError("Email field cannot be empty");
+
+                    }
+                }
+
+
+            }
+        });
 
 
 
