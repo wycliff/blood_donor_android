@@ -15,7 +15,7 @@ import wycliffe.com.bdf.model.LoginModel;
 public interface LoginApiInterface {
 
     @FormUrlEncoded
-    @POST("/login/") //the endpoint.
+    @POST("login/") //the endpoint.
 
         //return value is always a parameterized Call<T> object
     Call<LoginModel> getLogged( @Field("email") String email, @Field("password") String password);

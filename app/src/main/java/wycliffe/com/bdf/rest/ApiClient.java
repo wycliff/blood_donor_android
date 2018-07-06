@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
 
 
-    public static final String BASE_URL ="http://127.0.0.1:8000/myrest/users/";
+    public static final String BASE_URL ="https://bdf.herokuapp.com/myrest/users/";
     private static Retrofit retrofit = null;
 
 
