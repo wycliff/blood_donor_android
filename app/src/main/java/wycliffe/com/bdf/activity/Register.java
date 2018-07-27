@@ -38,7 +38,7 @@ public class Register extends AppCompatActivity {
             inputLayoutPhone, inputLayoutWeight, inputLayoutAge, inputLayoutName;
 
     RadioGroup radioGenderGroup, radioFtdGroup, radioRhesusGroup;
-    RadioButton radioGenderButton, radioFtdButton, radioRhesusButton ;
+    RadioButton radioGenderButton, radioFtdButton, radioRhesusButton ,radioMale,radioFemale,radioPositive, radioNegative, radioYes, radioNo;
 
     //For the Spinner
     private Spinner myLocationSpinner, myBloodSpinner;
@@ -193,9 +193,9 @@ public class Register extends AppCompatActivity {
 
         myBloodSpinner = (Spinner) findViewById(R.id.myBloodGroupSpinner);
         ArrayAdapter<String> blood_type_adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.single_blood_type, R.id.single_blood_type,blood_type_options);
-        myLocationSpinner.setAdapter(blood_type_adapter); // set list of values to spinner
+        myBloodSpinner.setAdapter(blood_type_adapter); // set list of values to spinner
 
-        blood_type = myLocationSpinner.getSelectedItem().toString();
+        blood_type = myBloodSpinner.getSelectedItem().toString();
 
 
 
@@ -217,6 +217,25 @@ public class Register extends AppCompatActivity {
                 if (password.equals(confirmPassword)){
                     password = confirmPassword;
                 }
+
+
+
+                //--------------------------------------------Handling Radio Buttons for setting the type and gender (not used here)--------------------------------
+
+                radioMale=(RadioButton)findViewById(R.id.Male);
+                radioFemale=(RadioButton)findViewById(R.id.Female);
+
+                radioYes=(RadioButton)findViewById(R.id.yes);
+                radioNo=(RadioButton)findViewById(R.id.no);
+
+                radioPositive=(RadioButton)findViewById(R.id.positive);
+                radioNegative=(RadioButton)findViewById(R.id.negative);
+
+                // getting (what i am using)
+                radioRhesusGroup = (RadioGroup)findViewById(R.id.RadioRhesus);
+                radioGenderGroup =  (RadioGroup)findViewById(R.id.RadioGender);
+                radioFtdGroup = (RadioGroup)findViewById(R.id.RadioFtd);
+
 
 //-------------------------------------------Handling the Radio Buttons -----------------------------------------------------------------
                 // get selected radio button from radioGroup
