@@ -149,42 +149,9 @@ public class Register extends AppCompatActivity {
         //addItemsOnSpinner();
 //        addListenerOnSpinnerItemSelection();
         //addItemsOnSpinner();
-        place = myLocationSpinner.getSelectedItem().toString();
 
-        switch (place)
-        {
-            case "Central":
-                location = 1;
 
-                break;
-            case "Coast":
-                location = 2;
 
-                break;
-            case "Eastern":
-                location = 3;
-
-                break;
-            case "Nairobi":
-                location = 4;
-
-                break;
-            case "North Eastern":
-                location = 5;
-
-                break;
-            case "Nyanza":
-                location = 6;
-
-                break;
-            case "Rift Valley":
-                location = 7;
-                       break;
-            default:
-                location = 8;
-                break;
-
-        }
 
         blood_type_options.add("A");
         blood_type_options.add("B");
@@ -195,7 +162,7 @@ public class Register extends AppCompatActivity {
         ArrayAdapter<String> blood_type_adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.single_blood_type, R.id.single_blood_type,blood_type_options);
         myBloodSpinner.setAdapter(blood_type_adapter); // set list of values to spinner
 
-        blood_type = myBloodSpinner.getSelectedItem().toString();
+
 
 
 
@@ -204,21 +171,65 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // Get the selected not at onCreate() but onClick
+                blood_type = myBloodSpinner.getSelectedItem().toString();
+                place = myLocationSpinner.getSelectedItem().toString();
+
+                switch (place)
+                {
+                    case "Central":
+                        location = 1;
+
+                        break;
+                    case "Coast":
+                        location = 2;
+
+                        break;
+                    case "Eastern":
+                        location = 3;
+
+                        break;
+                    case "Nairobi":
+                        location = 4;
+
+                        break;
+                    case "North Eastern":
+                        location = 5;
+
+                        break;
+                    case "Nyanza":
+                        location = 6;
+
+                        break;
+                    case "Rift Valley":
+                        location = 7;
+                        break;
+                    default:
+                        location = 8;
+                        break;
+
+                }
+
                 name = etName.getText().toString().trim();
                 email = etEmail.getText().toString().trim();
                 phone=  etPhone.getText().toString().trim();
                 password= etPassword.getText().toString().trim();
                 confirmPassword= etConfirmPassword.getText().toString().trim();
 
-                age = Integer.parseInt(etAge.getText().toString().trim());
-                weight = Integer.parseInt(etWeight.getText().toString().trim());
+                try {
+
+                    age = Integer.parseInt(etAge.getText().toString().trim());
+                    weight = Integer.parseInt(etWeight.getText().toString().trim());
+                }
+                catch(NumberFormatException e){
+
+                }
+
 
                 //do inside btn.onclick
                 if (password.equals(confirmPassword)){
                     password = confirmPassword;
                 }
-
-
 
                 //--------------------------------------------Handling Radio Buttons for setting the type and gender (not used here)--------------------------------
 
@@ -274,11 +285,61 @@ public class Register extends AppCompatActivity {
                     rhesus = false;
                 }
 
+                // Check if et fields have been entered
+                if(email.trim().length() > 0 && password.trim().length() > 0 && confirmPassword.trim().length() > 0 &&
+                        name.trim().length() > 0 && phone.trim().length()> 0 && Integer.toString(age).trim().length() > 0 &&
+                        Integer.toString(weight).trim().length() > 0 ){
+//====================================================================== SERVER SERVER SERVER =============================================================================
+                    Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + place, Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + radioRhesusButton.getText().toString()+ Integer.toString(age) + Integer.toString(weight) + Integer.toString(location), Toast.LENGTH_LONG).show();
+//=========================================================================================================================================================================
+                }
+                else
+                {
 
-                Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + place, Toast.LENGTH_LONG).show();
-                Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + radioRhesusButton.getText().toString()+ Integer.toString(age) + Integer.toString(weight) + Integer.toString(location), Toast.LENGTH_LONG).show();
+                    //Setting error on view
+                    if(email.trim().length() <= 0 && password.trim().length() <= 0 && name.trim().length() <= 0 &&
+                            confirmPassword.trim().length() <= 0 && phone.trim().length() <= 0 /*&& Integer.toString(age).trim().length() <= 0 &&
+                            Integer.toString(weight).trim().length() <= 0*/) {
 
-            }
+                        inputLayoutEmail.setError("Field cannot be empty");
+                        inputLayoutConfirmPassword.setError("Field cannot be empty");
+                        inputLayoutName.setError("Field cannot be empty");
+                        inputLayoutPhone.setError("Field cannot be empty");
+                        inputLayoutPassword.setError("Field cannot be empty");
+                        inputLayoutAge.setError("Field cannot be empty");
+                        inputLayoutWeight.setError("Field cannot be empty");
+
+                    }
+//                    else if(confirmPassword.trim().length() <= 0) {
+//                        inputLayoutConfirmPassword.setError("Field cannot be empty");
+//                    }
+                    else if(password.trim().length() <= 0) {
+                        inputLayoutPassword.setError("Field cannot be empty");
+                    }
+                    else if(name.trim().length() <= 0) {
+                        inputLayoutName.setError("Field cannot be empty");
+                    }
+                    else if(phone.trim().length() <= 0) {
+                        inputLayoutPhone.setError("Field cannot be empty");
+                    }
+                    else if(email.trim().length() <= 0){
+                        inputLayoutEmail.setError("Email field cannot be empty");
+                    }
+                    else if(Integer.toString(age).trim().length() <= 0){
+                        inputLayoutEmail.setError("Age field cannot be empty");
+                    }
+                    else if(Integer.toString(weight).trim().length() <= 0){
+                        inputLayoutEmail.setError("Weight field cannot be empty");
+                    }
+                    else{
+                        Toast.makeText(Register.this,"ALL FIELDS REQUIRED", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+                } // End onClick()
+
         });
 
 
