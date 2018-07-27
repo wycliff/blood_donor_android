@@ -16,4 +16,25 @@
     <string name="err_msg_password">Enter the password</string>
     <string name="err_msg_field"> Field Required </string>
 
+    <string name="hint_name"> Full name </string>
+    <string name="hint_phone"> Phone Number </string>
+    <string name="hint_weight"> Weight </string>
+    <string name="hint_confirm_password"> Confirm password </string>
+
+    <string name="hint_gender"> Gender </string>
+    <string name="hint_male"> Male </string>
+    <string name="hint_female"> Female </string>
+
+    <string name="hint_rhesus"> Rhesus </string>
+    <string name="hint_positive"> Positive </string>
+    <string name="hint_negative"> negative </string>
+
+    <string name="button_register"> Register</string>
+
+    <string name="blood_group_prompt">Blood Group </string>
+    <string name="location_prompt">Location/Region </string>
+
+
+
+
 </resources>

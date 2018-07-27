@@ -137,7 +137,7 @@
                     android:textAllCaps="false"
                     android:text="Not registered? CLICK HERE"
                     android:textSize="15sp"
-                    android:id="@+id/btnRegister"
+                    android:id="@+id/btnToRegister"
                     android:layout_below="@id/buttonLogin"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"

@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
 
 
     EditText etEmail,etPassword;
-    Button btnLogin;
+    Button btnLogin, btnToReg;
     CheckBox cbShowPassword;
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
     String email, password;
@@ -42,16 +42,28 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         btnLogin = (Button) findViewById(R.id.buttonLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnToReg = (Button) findViewById(R.id.btnToRegister);
+        btnToReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //intent which to next
-                Intent in = new Intent(Login.this,MainActivity.class);
-                startActivity(in);
+                Intent intent = new Intent(Login.this,Register.class);
+                startActivity(intent);
                 Login.this.finish();
             }
         });
+
+
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                //intent which to next
+//                Intent in = new Intent(Login.this,MainActivity.class);
+//                startActivity(in);
+//                Login.this.finish();
+//            }
+//        });
 
 
 
@@ -99,6 +111,8 @@ public class Login extends AppCompatActivity {
 
 //============== REST
 
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +155,12 @@ public class Login extends AppCompatActivity {
 
                                 String emailResponse = response.body().getEmail();
                                 Toast.makeText(Login.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
+
+
+
+                                        Intent in = new Intent(Login.this,MainActivity.class);
+                                        startActivity(in);
+                                        Login.this.finish();
 
                             }
 
@@ -258,4 +278,4 @@ private class MyTextWatcher implements TextWatcher {
         }
     }
 }
-}
+} // End class
