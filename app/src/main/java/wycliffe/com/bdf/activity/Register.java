@@ -24,8 +24,18 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wycliffe.com.bdf.R;
+import wycliffe.com.bdf.model.LoginModel;
+import wycliffe.com.bdf.model.RegisterResponseModel;
+import wycliffe.com.bdf.rest.ApiClient;
+import wycliffe.com.bdf.rest.LoginApiInterface;
+import wycliffe.com.bdf.rest.RegisterApiInterface;
 
 
 public class Register extends AppCompatActivity {
@@ -86,7 +96,7 @@ public class Register extends AppCompatActivity {
         etWeight = (EditText) findViewById(R.id.etWeight);
         etPhone = (EditText) findViewById(R.id.etPhoneReg);
 
-        //Getting the login Button
+        //Getting the Register Button
         btnRegister = (Button) findViewById(R.id.registerButton);
 
 
@@ -290,6 +300,76 @@ public class Register extends AppCompatActivity {
                         name.trim().length() > 0 && phone.trim().length()> 0 && Integer.toString(age).trim().length() > 0 &&
                         Integer.toString(weight).trim().length() > 0 ){
 //====================================================================== SERVER SERVER SERVER =============================================================================
+
+                    //=========================================================  connection to the API
+
+                    progressDialog = new ProgressDialog(Register.this);
+                    progressDialog.setMax(100);
+                    progressDialog.setMessage("Its loading....");
+                    progressDialog.setTitle("Fetching Server Data");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.show();
+
+
+
+                    //prepare call in retrofit 2.0
+                    // get type retrofit object stored into service.
+                    RegisterApiInterface apiService = ApiClient.getClient().create(RegisterApiInterface.class);
+
+                    Map<String, String> postParams  = new HashMap<>();
+
+//                    postParams.put("email",email);
+
+
+
+                    // Giving it the info from the edit text views.
+                    Call<RegisterResponseModel> call = apiService.getRegistered(email
+                    , password, name,Integer.parseInt(phone), ftd, blood_type,rhesus, age,Integer.toString(location), gender, weight);
+
+                    call.enqueue(new Callback<RegisterResponseModel>() {
+                        @Override
+                        public void onResponse(Call<RegisterResponseModel> call, Response<RegisterResponseModel> response) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Register.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
+
+                            if(response.code()==200) {
+
+
+                                String emailResponse = response.body().getEmail();
+                                Toast.makeText(Register.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
+
+
+
+                                Intent in = new Intent(Register.this,MainActivity.class);
+                                startActivity(in);
+                                Register.this.finish();
+
+                            }
+
+                            else {
+
+                                Toast.makeText(Register.this, " Some code ", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<RegisterResponseModel> call, Throwable t) {
+
+                            progressDialog.dismiss();
+                            Toast.makeText(Register.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+
+
+
+
+
+
                     Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + place, Toast.LENGTH_LONG).show();
                     Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + radioRhesusButton.getText().toString()+ Integer.toString(age) + Integer.toString(weight) + Integer.toString(location), Toast.LENGTH_LONG).show();
 //=========================================================================================================================================================================

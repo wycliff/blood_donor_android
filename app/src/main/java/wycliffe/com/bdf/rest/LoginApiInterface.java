@@ -6,6 +6,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import wycliffe.com.bdf.model.LoginModel;
+import wycliffe.com.bdf.model.LoginResponseModel;
 
 
 /**
@@ -18,7 +19,7 @@ public interface LoginApiInterface {
     @POST("login/") //the endpoint.
 
         //return value is always a parameterized Call<T> object
-    Call<LoginModel> getLogged( @Field("email") String email, @Field("password") String password);
+    Call<LoginResponseModel> getLogged(@Field("email") String email, @Field("password") String password);
 
 
 }

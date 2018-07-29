@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
+import wycliffe.com.bdf.model.LoginResponseModel;
+import wycliffe.com.bdf.model.RegisterResponseModel;
+
 /**
  * Created by Wycliffe on 12/27/2017.
  */
@@ -33,10 +36,16 @@ public class SessionManager {
     // User name (make variable public to access from outside)
     public static final String KEY_NAME = "name";
 
-    // Secret code sent during each transaction
-    public static final String KEY_SECRET_CODE  = "secretCode";
-
-    // You can at this point add the rest of the details that the user will enter
+    // Email address (make variable public to access from outside)
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PHONE = "phone";
+    public static final String KEY_GENDER = "gender";
+    public static final String KEY_TYPE = "blood_type";
+    public static final String KEY_WEIGHT= "weight";
+    public static final String KEY_LOCATION = "current_location";
+    public static final String KEY_RHESUS= "rhesus_factor";
+    public static final String KEY_FTD = "first_time_donor";
+    public static final String KEY_AGE= "age";
 
 
     // Constructor
@@ -45,7 +54,6 @@ public class SessionManager {
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE); //creates the sharedPreference
         editor = pref.edit(); // initializes the editor
 
-
     }
 
     /**
@@ -53,20 +61,26 @@ public class SessionManager {
      * */
     //This function simply stores login status(true), and agent name and the secret code in shared preferences.
 
-    public void createLoginSession(String name, String secret ){
+    public void createLoginSession(LoginResponseModel regModel){
 
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing name in pref takes key and value
-        editor.putString(KEY_NAME, name );
-
-        editor.putString(KEY_SECRET_CODE, secret);
+        editor.putString(KEY_NAME, regModel.getFullName() );
+        editor.putInt(KEY_AGE, regModel.getAge());
+        editor.putString(KEY_EMAIL, regModel.getEmail());
+        editor.putBoolean(KEY_FTD, regModel.getFirstTimeDonor());
+        editor.putString(KEY_GENDER, regModel.getGender());
+        editor.putInt(KEY_LOCATION,regModel.getCurrentLocation());
+        editor.putString(KEY_PHONE, regModel.getPhone());
+        editor.putBoolean(KEY_RHESUS, regModel.getRhesusFactor());
+        editor.putString(KEY_TYPE, regModel.getBloodType());
+        editor.putInt(KEY_WEIGHT, regModel.getWeight());
 
         // commit changes
         editor.commit();
     }
-
 
     //In order to get the stored preferences data, I added a function called getAgentDetails() with the following code.
     //The following function will read shared preferences and returns user data in HashMap. Keys initalized in the SharedPreference Class
@@ -74,14 +88,24 @@ public class SessionManager {
     /**
      * Get stored session data
      * */
-    public HashMap<String, String> getDonorDetails(){
+    public HashMap<String, String> getUserDetails(){
 
         HashMap<String, String> user = new HashMap<String, String>();
         // user name
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
 
-        //  secret key
-        user.put(KEY_SECRET_CODE, pref.getString(KEY_SECRET_CODE, null));
+        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        user.put(KEY_PHONE, pref.getString(KEY_PHONE, null));
+        user.put(KEY_WEIGHT, pref.getString(KEY_WEIGHT, null));
+        user.put(KEY_AGE, pref.getString(KEY_AGE, null));
+        user.put(KEY_TYPE, pref.getString(KEY_TYPE, null));
+        user.put(KEY_RHESUS, pref.getString(KEY_RHESUS, null));
+        user.put(KEY_LOCATION, pref.getString(KEY_LOCATION, null));
+        user.put(KEY_FTD, pref.getString(KEY_FTD, null));
+        user.put(KEY_GENDER, pref.getString(KEY_GENDER, null));
+
+
+
 
         // return user
         return user;

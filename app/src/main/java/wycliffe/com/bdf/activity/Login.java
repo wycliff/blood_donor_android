@@ -22,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wycliffe.com.bdf.R;
 import wycliffe.com.bdf.model.LoginModel;
+import wycliffe.com.bdf.model.LoginResponseModel;
 import wycliffe.com.bdf.rest.ApiClient;
 import wycliffe.com.bdf.rest.LoginApiInterface;
 
@@ -34,6 +35,9 @@ public class Login extends AppCompatActivity {
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
     String email, password;
     ProgressDialog progressDialog;
+
+    // Session Manager Class
+    SessionManager session;
 
 
     @Override
@@ -66,8 +70,12 @@ public class Login extends AppCompatActivity {
 //        });
 
 
+//---------------------------------------New instance of the shared preference class-------------------------------------------------------------------------------------------
+                // Session Manager
+                session = new SessionManager(getApplicationContext());
+        // Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
-
+//-
 //----------------------------------------------------------------------------------------------------------------------------------------
 
         //Getting the email from user
@@ -141,11 +149,11 @@ public class Login extends AppCompatActivity {
 
 
                     // Giving it the info from the edit text views.
-                    Call<LoginModel> call = apiService.getLogged(email,password);
+                    Call<LoginResponseModel> call = apiService.getLogged(email,password);
 
-                    call.enqueue(new Callback<LoginModel>() {
+                    call.enqueue(new Callback<LoginResponseModel>() {
                         @Override
-                        public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
+                        public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
 
                             progressDialog.dismiss();
                             Toast.makeText(Login.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
@@ -157,6 +165,8 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
 
 
+
+                                        session.createLoginSession(response.body());
 
                                         Intent in = new Intent(Login.this,MainActivity.class);
                                         startActivity(in);
@@ -173,7 +183,7 @@ public class Login extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<LoginModel> call, Throwable t) {
+                        public void onFailure(Call<LoginResponseModel> call, Throwable t) {
 
                             progressDialog.dismiss();
                             Toast.makeText(Login.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();

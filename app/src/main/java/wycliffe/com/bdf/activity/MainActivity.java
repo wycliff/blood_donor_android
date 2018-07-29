@@ -1,5 +1,7 @@
 package wycliffe.com.bdf.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,15 +20,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wycliffe.com.bdf.R;
+import wycliffe.com.bdf.model.RecommendResponseModel;
+import wycliffe.com.bdf.model.RegisterResponseModel;
+import wycliffe.com.bdf.rest.ApiClient;
+import wycliffe.com.bdf.rest.RecommendApiInterface;
+import wycliffe.com.bdf.rest.RegisterApiInterface;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    ProgressDialog progressDialog;
     /*===========================Session and drawer =================================================*/
     // Session Manager Class
     public SessionManager session;
+
+    HashMap<String, String> details = new HashMap<>();
+
+    String blood_type, gender,current_location, weight, age;
+    Boolean rhesus;
 
 
     /**
@@ -69,7 +88,88 @@ public class MainActivity extends AppCompatActivity {
          * logged in. Very  Important
          * */
         session.checkLogin();
-/*=====================================================================================================================================*/
+
+
+        //get details from shared pref
+        details=session.getUserDetails();
+
+        //To send
+        blood_type= details.get("blood_type");
+        rhesus = Boolean.valueOf(details.get("rhesus_factor"));
+        age = details.get("age");
+        weight = details.get("weight");
+        current_location = details.get("current_location");
+        gender = details.get("gender");
+
+
+//--------------------------------------------- Communicate with server
+//====================================================================== SERVER SERVER SERVER =============================================================================
+
+        //=========================================================  connection to the API
+
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMax(100);
+        progressDialog.setMessage("Its loading....");
+        progressDialog.setTitle("Fetching Server Data");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.show();
+
+
+        //prepare call in retrofit 2.0
+        // get type retrofit object stored into service.
+        RecommendApiInterface apiService = ApiClient.getClient().create(RecommendApiInterface.class);
+
+        Map<String, String> postParams  = new HashMap<>();
+
+//                    postParams.put("email",email);
+
+
+
+        // Giving it the info from the edit text views.
+        Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type,rhesus, Integer.parseInt(age),Integer.parseInt(current_location), gender, Integer.parseInt(weight));
+
+        call.enqueue(new Callback<RecommendResponseModel>() {
+            @Override
+            public void onResponse(Call<RecommendResponseModel> call, Response<RecommendResponseModel> response) {
+
+                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
+
+                if(response.code()==200) {
+
+                    //To be displayed in Clickable LView (Needs and adapter)
+                    Toast.makeText(MainActivity.this, response.body().toString() , Toast.LENGTH_SHORT).show();
+
+
+                }
+
+                else {
+
+                    Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RecommendResponseModel> call, Throwable t) {
+
+                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+        /*=====================================================================================================================================*/
 
 
 
@@ -88,14 +188,9 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
+
 
     }
 
