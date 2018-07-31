@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
                     Toast.makeText(MainActivity.this,response.message(), Toast.LENGTH_SHORT).show();
 
-
                 }
             }
 
@@ -163,12 +162,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
 
 
 
@@ -205,6 +198,23 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    //Method that logs you out
+    public void logout(){
+
+        Toast.makeText(getApplicationContext(),"goodbye!",Toast.LENGTH_LONG).show();
+
+        // Clear the session data
+        // This will clear all session data and
+        // redirect user to LoginActivity
+        session.logoutUser();
+
+
+        //Killer
+        MainActivity.this.finish();
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -213,7 +223,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            logout();
             return true;
         }
 
@@ -250,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }

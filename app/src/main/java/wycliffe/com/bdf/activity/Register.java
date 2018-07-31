@@ -337,7 +337,7 @@ public class Register extends AppCompatActivity {
 
 
                                 String emailResponse = response.body().getEmail();
-                                Toast.makeText(Register.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Welcome" , Toast.LENGTH_SHORT).show();
 
 
                                 Intent in = new Intent(Register.this,MainActivity.class);
@@ -348,7 +348,7 @@ public class Register extends AppCompatActivity {
 
                             else {
 
-                                Toast.makeText(Register.this, response.message(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Server Error", Toast.LENGTH_SHORT).show();
 
 
                             }
@@ -367,10 +367,10 @@ public class Register extends AppCompatActivity {
 
 
 
-
-                    Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + location, Toast.LENGTH_LONG).show();
-                    Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + rhesus + age + weight + location, Toast.LENGTH_LONG).show();
-//=========================================================================================================================================================================
+//
+//                    Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + location, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + rhesus + age + weight + location, Toast.LENGTH_LONG).show();
+////=========================================================================================================================================================================
                 }
                 else
                 {
