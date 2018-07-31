@@ -68,15 +68,15 @@ public class SessionManager {
 
         // Storing name in pref takes key and value
         editor.putString(KEY_NAME, regModel.getFullName() );
-        editor.putInt(KEY_AGE, regModel.getAge());
+        editor.putString(KEY_AGE, regModel.getAge().toString());
         editor.putString(KEY_EMAIL, regModel.getEmail());
-        editor.putBoolean(KEY_FTD, regModel.getFirstTimeDonor());
+        editor.putString(KEY_FTD, regModel.getFirstTimeDonor().toString());
         editor.putString(KEY_GENDER, regModel.getGender());
-        editor.putInt(KEY_LOCATION,regModel.getCurrentLocation());
+        editor.putString(KEY_LOCATION,regModel.getCurrentLocation().toString());
         editor.putString(KEY_PHONE, regModel.getPhone());
-        editor.putBoolean(KEY_RHESUS, regModel.getRhesusFactor());
+        editor.putString(KEY_RHESUS, regModel.getRhesusFactor().toString());
         editor.putString(KEY_TYPE, regModel.getBloodType());
-        editor.putInt(KEY_WEIGHT, regModel.getWeight());
+        editor.putString(KEY_WEIGHT, regModel.getWeight().toString());
 
         // commit changes
         editor.commit();

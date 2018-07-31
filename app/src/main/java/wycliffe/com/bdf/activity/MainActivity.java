@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     HashMap<String, String> details = new HashMap<>();
 
-    String blood_type, gender,current_location, weight, age;
-    Boolean rhesus;
+    String blood_type, gender,current_location, weight, age, rhesus;
+    //Boolean rhesus;
 
 
     /**
@@ -73,14 +73,18 @@ public class MainActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
 
         //For testing purposes.
-//        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+
+
 
         //bug fix
         if(session.isLoggedIn()==false){
 
             //Killer
             MainActivity.this.finish();
+
         }
+
 
         /**
          * Call this function whenever you want to check user login
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         //To send
         blood_type= details.get("blood_type");
-        rhesus = Boolean.valueOf(details.get("rhesus_factor"));
+        rhesus = details.get("rhesus_factor");
         age = details.get("age");
         weight = details.get("weight");
         current_location = details.get("current_location");
@@ -126,13 +130,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Giving it the info from the edit text views.
-        Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type,rhesus, Integer.parseInt(age),Integer.parseInt(current_location), gender, Integer.parseInt(weight));
+        Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type, rhesus, age,current_location, gender, weight);
 
         call.enqueue(new Callback<RecommendResponseModel>() {
             @Override
             public void onResponse(Call<RecommendResponseModel> call, Response<RecommendResponseModel> response) {
 
-                progressDialog.dismiss();
+                //progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
 
                 if(response.code()==200) {
@@ -140,12 +144,11 @@ public class MainActivity extends AppCompatActivity {
                     //To be displayed in Clickable LView (Needs and adapter)
                     Toast.makeText(MainActivity.this, response.body().toString() , Toast.LENGTH_SHORT).show();
 
-
                 }
 
                 else {
 
-                    Toast.makeText(MainActivity.this, "Server error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,response.message(), Toast.LENGTH_SHORT).show();
 
 
                 }

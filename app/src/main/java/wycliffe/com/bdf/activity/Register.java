@@ -58,9 +58,9 @@ public class Register extends AppCompatActivity {
     ArrayList<String> blood_type_options=new ArrayList<String>();
 
 
-    String email, password, phone, gender, blood_type, name, confirmPassword, place;
-    public boolean ftd, rhesus;
-    int age, weight,location ;
+    String email, password, phone, gender, blood_type, name, confirmPassword, place,ftd, rhesus, age, weight,location  ;
+//    public boolean ftd, rhesus;
+//    int age, weight,location ;
 
     ProgressDialog progressDialog;
 
@@ -188,34 +188,34 @@ public class Register extends AppCompatActivity {
                 switch (place)
                 {
                     case "Central":
-                        location = 1;
+                        location = "1";
 
                         break;
                     case "Coast":
-                        location = 2;
+                        location = "2";
 
                         break;
                     case "Eastern":
-                        location = 3;
+                        location = "3";
 
                         break;
                     case "Nairobi":
-                        location = 4;
+                        location = "4";
 
                         break;
                     case "North Eastern":
-                        location = 5;
+                        location = "5";
 
                         break;
                     case "Nyanza":
-                        location = 6;
+                        location = "6";
 
                         break;
                     case "Rift Valley":
-                        location = 7;
+                        location = "7";
                         break;
                     default:
-                        location = 8;
+                        location = "8";
                         break;
 
                 }
@@ -228,8 +228,11 @@ public class Register extends AppCompatActivity {
 
                 try {
 
-                    age = Integer.parseInt(etAge.getText().toString().trim());
-                    weight = Integer.parseInt(etWeight.getText().toString().trim());
+//                    age = Integer.parseInt(etAge.getText().toString().trim());
+//                    weight = Integer.parseInt(etWeight.getText().toString().trim());
+                    age = etAge.getText().toString().trim();
+                    weight = etWeight.getText().toString().trim();
+
                 }
                 catch(NumberFormatException e){
 
@@ -281,24 +284,24 @@ public class Register extends AppCompatActivity {
 
                 //Assigning the selected student type the either '1' or '2'
                 if ((radioFtdButton.getText()).equals("YES")){
-                    ftd = true;
+                    ftd = "true";
                 }
                 else {
-                    ftd = false;
+                    ftd = "false";
                 }
 
 
                 if ((radioRhesusButton.getText()).equals("positive")){
-                    rhesus = true;
+                    rhesus = "true";
                 }
                 else {
-                    rhesus = false;
+                    rhesus = "false";
                 }
 
                 // Check if et fields have been entered
                 if(email.trim().length() > 0 && password.trim().length() > 0 && confirmPassword.trim().length() > 0 &&
-                        name.trim().length() > 0 && phone.trim().length()> 0 && Integer.toString(age).trim().length() > 0 &&
-                        Integer.toString(weight).trim().length() > 0 ){
+                        name.trim().length() > 0 && phone.trim().length()> 0 && age.trim().length() > 0 &&
+                        weight.trim().length() > 0 ){
 //====================================================================== SERVER SERVER SERVER =============================================================================
 
                     //=========================================================  connection to the API
@@ -318,13 +321,10 @@ public class Register extends AppCompatActivity {
 
                     Map<String, String> postParams  = new HashMap<>();
 
-//                    postParams.put("email",email);
-
-
 
                     // Giving it the info from the edit text views.
                     Call<RegisterResponseModel> call = apiService.getRegistered(email
-                    , password, name,Integer.parseInt(phone), ftd, blood_type,rhesus, age,Integer.toString(location), gender, weight);
+                    , password, name, phone , ftd, blood_type,rhesus, age,location , gender, weight);
 
                     call.enqueue(new Callback<RegisterResponseModel>() {
                         @Override
@@ -340,7 +340,6 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(Register.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
 
 
-
                                 Intent in = new Intent(Register.this,MainActivity.class);
                                 startActivity(in);
                                 Register.this.finish();
@@ -349,7 +348,7 @@ public class Register extends AppCompatActivity {
 
                             else {
 
-                                Toast.makeText(Register.this, " Some code ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, response.message(), Toast.LENGTH_SHORT).show();
 
 
                             }
@@ -361,7 +360,6 @@ public class Register extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(Register.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
 
-
                         }
                     });
 
@@ -370,8 +368,8 @@ public class Register extends AppCompatActivity {
 
 
 
-                    Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + place, Toast.LENGTH_LONG).show();
-                    Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + radioRhesusButton.getText().toString()+ Integer.toString(age) + Integer.toString(weight) + Integer.toString(location), Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this, email + password + phone + gender + blood_type +  name + confirmPassword + location, Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,radioGenderButton.getText().toString() + radioFtdButton.getText().toString() + rhesus + age + weight + location, Toast.LENGTH_LONG).show();
 //=========================================================================================================================================================================
                 }
                 else
@@ -406,10 +404,10 @@ public class Register extends AppCompatActivity {
                     else if(email.trim().length() <= 0){
                         inputLayoutEmail.setError("Email field cannot be empty");
                     }
-                    else if(Integer.toString(age).trim().length() <= 0){
+                    else if(age.trim().length() <= 0){
                         inputLayoutEmail.setError("Age field cannot be empty");
                     }
-                    else if(Integer.toString(weight).trim().length() <= 0){
+                    else if( weight.trim().length() <= 0){
                         inputLayoutEmail.setError("Weight field cannot be empty");
                     }
                     else{

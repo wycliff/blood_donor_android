@@ -19,9 +19,9 @@ public interface RecommendApiInterface {
         //return value is always a parameterized Call<T> object
     Call<RecommendResponseModel> getRecommendations(
                                                     @Field("blood_type") String blood_type,
-                                                    @Field("rhesus_factor") boolean rhesus, @Field("age") int age,
-                                                    @Field("current_location") int current_location,@Field("gender") String gender,
-                                                    @Field("weight") int weight );
+                                                    @Field("rhesus_factor") String rhesus, @Field("age") String age,
+                                                    @Field("current_location") String current_location,@Field("gender") String gender,
+                                                    @Field("weight") String weight );
 }
 
 
