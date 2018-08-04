@@ -162,8 +162,7 @@ public class Login extends AppCompatActivity {
 
 
                                 String emailResponse = response.body().getEmail();
-                                Toast.makeText(Login.this, "Welcome" + emailResponse, Toast.LENGTH_SHORT).show();
-
+                                Toast.makeText(Login.this, "Welcome" + response.body().getFullName(), Toast.LENGTH_SHORT).show();
 
 
                                         session.createLoginSession(response.body());
@@ -171,12 +170,11 @@ public class Login extends AppCompatActivity {
                                         Intent in = new Intent(Login.this,MainActivity.class);
                                         startActivity(in);
                                         Login.this.finish();
-
                             }
 
                             else {
 
-                                Toast.makeText(Login.this, " Some code ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login.this, " Server error", Toast.LENGTH_SHORT).show();
 
 
                             }

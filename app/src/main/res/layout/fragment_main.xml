@@ -19,4 +19,33 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
 
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" >-->
+    <!--&lt;!&ndash;android:layout_below="@+id/appbar"&ndash;&gt;-->
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/donorText"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="  YOUR SUGGESTED DONORS" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/recommendButton"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/donorText"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@color/colorPrimary"-->
+    <!--android:text="@string/button_register"-->
+    <!--android:textColor="#fff" />-->
+
+
+    <!--</RelativeLayout>-->
+
+
+
 </android.support.constraint.ConstraintLayout>

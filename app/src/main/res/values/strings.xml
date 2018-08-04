@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BDF</string>
-    <string name="tab_text_1">EDIT DETAILS</string>
-    <string name="tab_text_2">GET DONOR</string>
+    <string name="tab_text_1">GET DONOR</string>
+    <string name="tab_text_2">EDIT DETAILS</string>
     <string name="tab_text_3">MANUAL</string>
     <string name="action_Logout">Log out</string>
     <string name="section_format"> </string>

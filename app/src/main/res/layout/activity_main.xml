@@ -51,20 +51,43 @@
                 android:text="@string/tab_text_3" />
 
         </android.support.design.widget.TabLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="end|bottom"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
+        <!--android:layout_below="@+id/appbar"-->
+        <!--android:layout_gravity="center_vertical"-->
+
+        <!--&gt;-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/donorText"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="  YOUR SUGGESTED DONORS" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/recommendButton"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_below="@+id/donorText"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:text="@string/button_register"-->
+            <!--android:textColor="#fff" />-->
+
+
+    <!--</RelativeLayout>-->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -123,12 +123,11 @@ public class MainActivity extends AppCompatActivity {
         // get type retrofit object stored into service.
         RecommendApiInterface apiService = ApiClient.getClient().create(RecommendApiInterface.class);
 
-        Map<String, String> postParams  = new HashMap<>();
-
-//                    postParams.put("email",email);
-
+//        Map<String, String> postParams  = new HashMap<>();
+//        postParams.put("email",email);
 
 
+//        Toast.makeText(MainActivity.this, blood_type + " " +  rhesus + " " + age + " " + current_location + " " + gender + " " + weight , Toast.LENGTH_SHORT).show();
         // Giving it the info from the edit text views.
         Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type, rhesus, age,current_location, gender, weight);
 
@@ -137,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<RecommendResponseModel> call, Response<RecommendResponseModel> response) {
 
                 //progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "code" +response.code(), Toast.LENGTH_SHORT).show();
 
                 if(response.code()==200) {
 
@@ -157,8 +156,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<RecommendResponseModel> call, Throwable t) {
 
                 progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(MainActivity.this," Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -183,10 +181,6 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-
-
-
 
     }
 
