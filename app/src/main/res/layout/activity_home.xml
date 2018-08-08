@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        tools:context="wycliffe.com.bdf.activity.HomeActivity">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#fff"
+                android:layout_below="@id/toolbar">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff">
+
+
+                    <Button
+                        android:id="@+id/recommendButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/donorText"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/colorPrimary"
+                        android:text="Generate"
+                        android:textColor="#fff"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        />
+
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/donorListView"
+                        android:layout_below="@+id/recommendButton"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        />
+                    <!---->
+
+
+                </RelativeLayout>
+            </FrameLayout>
+
+    </RelativeLayout>
+

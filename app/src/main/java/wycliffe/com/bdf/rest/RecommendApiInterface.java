@@ -1,5 +1,7 @@
 package wycliffe.com.bdf.rest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -17,7 +19,7 @@ public interface RecommendApiInterface {
     @POST("recommend/") //the endpoint.
 
         //return value is always a parameterized Call<T> object
-    Call<RecommendResponseModel> getRecommendations(
+    Call<ArrayList<RecommendResponseModel>> getRecommendations(
                                                     @Field("blood_type") String blood_type,
                                                     @Field("rhesus_factor") String rhesus, @Field("age") String age,
                                                     @Field("current_location") String current_location,@Field("gender") String gender,

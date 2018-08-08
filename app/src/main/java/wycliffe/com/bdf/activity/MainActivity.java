@@ -1,10 +1,7 @@
 package wycliffe.com.bdf.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,21 +16,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import wycliffe.com.bdf.R;
 import wycliffe.com.bdf.model.RecommendResponseModel;
-import wycliffe.com.bdf.model.RegisterResponseModel;
 import wycliffe.com.bdf.rest.ApiClient;
 import wycliffe.com.bdf.rest.RecommendApiInterface;
-import wycliffe.com.bdf.rest.RegisterApiInterface;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     String blood_type, gender,current_location, weight, age, rhesus;
     //Boolean rhesus;
+    Button btngetDonors;
 
+     ArrayAdapter<String> adapter;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -67,6 +65,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // The toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
 /*============================================== Shared preference applied here====================================================*/
         // Session class instance . very important.
@@ -107,82 +122,75 @@ public class MainActivity extends AppCompatActivity {
 
 
 //--------------------------------------------- Communicate with server
-//====================================================================== SERVER SERVER SERVER =============================================================================
-
-        //=========================================================  connection to the API
-
-        progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMax(100);
-        progressDialog.setMessage("Its loading....");
-        progressDialog.setTitle("Fetching Server Data");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.show();
 
 
-        //prepare call in retrofit 2.0
-        // get type retrofit object stored into service.
-        RecommendApiInterface apiService = ApiClient.getClient().create(RecommendApiInterface.class);
+//        btngetDonors = (Button) findViewById(R.id.recommendButton);
+//
+         btngetDonors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setMax(100);
+                progressDialog.setMessage("Its loading....");
+                progressDialog.setTitle("Fetching Server Data");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.show();
+
+
+                //prepare call in retrofit 2.0
+                // get type retrofit object stored into service.
+                RecommendApiInterface apiService = ApiClient.getClient().create(RecommendApiInterface.class);
 
 //        Map<String, String> postParams  = new HashMap<>();
 //        postParams.put("email",email);
 
+//                Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type, rhesus, age,current_location, gender, weight);
+//
+//                call.enqueue(new Callback<RecommendResponseModel>() {
+//                    @Override
+//                    public void onResponse(Call<RecommendResponseModel> call, Response<RecommendResponseModel> response) {
+//
+//                        //progressDialog.dismiss();
+//                        Toast.makeText(MainActivity.this, "code" +response.code(), Toast.LENGTH_SHORT).show();
+//
+//                        if(response.code()==200) {
+//
+//                            //To be displayed in Clickable LView (Needs and adapter)
+//                            Toast.makeText(MainActivity.this, response.body().toString() , Toast.LENGTH_SHORT).show();
+//
+//                        }
+//
+//                        else {
+//
+//                            Toast.makeText(MainActivity.this,response.message(), Toast.LENGTH_SHORT).show();
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<RecommendResponseModel> call, Throwable t) {
+//
+//                        progressDialog.dismiss();
+//                        Toast.makeText(MainActivity.this," Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
 
-//        Toast.makeText(MainActivity.this, blood_type + " " +  rhesus + " " + age + " " + current_location + " " + gender + " " + weight , Toast.LENGTH_SHORT).show();
-        // Giving it the info from the edit text views.
-        Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type, rhesus, age,current_location, gender, weight);
+                /*=====================================================================================================================================*/
 
-        call.enqueue(new Callback<RecommendResponseModel>() {
-            @Override
-            public void onResponse(Call<RecommendResponseModel> call, Response<RecommendResponseModel> response) {
-
-                //progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, "code" +response.code(), Toast.LENGTH_SHORT).show();
-
-                if(response.code()==200) {
-
-                    //To be displayed in Clickable LView (Needs and adapter)
-                    Toast.makeText(MainActivity.this, response.body().toString() , Toast.LENGTH_SHORT).show();
-
-                }
-
-                else {
-
-                    Toast.makeText(MainActivity.this,response.message(), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RecommendResponseModel> call, Throwable t) {
-
-                progressDialog.dismiss();
-                Toast.makeText(MainActivity.this," Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
+                //===== Displaying List View
+               // adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, list of);
 
             }
         });
 
 
 
-        /*=====================================================================================================================================*/
 
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-    }
+    }// end onCreate()
 
 
     @Override
@@ -250,13 +258,20 @@ public class MainActivity extends AppCompatActivity {
             return fragment;
         }
 
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //Button btngetDonors = (Button) rootView.findViewById(R.id.recommendButton);
+            ListView donorListView = (ListView) rootView.findViewById(R.id.donorListView);
+
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+
+            // View used in my
             return rootView;
+
         }
     }
 

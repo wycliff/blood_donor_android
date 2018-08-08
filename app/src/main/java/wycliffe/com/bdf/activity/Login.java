@@ -167,7 +167,7 @@ public class Login extends AppCompatActivity {
 
                                         session.createLoginSession(response.body());
 
-                                        Intent in = new Intent(Login.this,MainActivity.class);
+                                        Intent in = new Intent(Login.this,HomeActivity.class);
                                         startActivity(in);
                                         Login.this.finish();
                             }

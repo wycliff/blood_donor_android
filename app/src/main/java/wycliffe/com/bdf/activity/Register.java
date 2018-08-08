@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +30,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import wycliffe.com.bdf.R;
-import wycliffe.com.bdf.model.LoginModel;
 import wycliffe.com.bdf.model.RegisterResponseModel;
 import wycliffe.com.bdf.rest.ApiClient;
-import wycliffe.com.bdf.rest.LoginApiInterface;
 import wycliffe.com.bdf.rest.RegisterApiInterface;
 
 
@@ -73,7 +70,7 @@ public class Register extends AppCompatActivity {
 
 //=====================================back button  =====================================================================================
         //sugested : Using toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
 //        if (toolbar != null) {
 //            setSupportActionBar(toolbar);
 //        }
@@ -333,25 +330,26 @@ public class Register extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(Register.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
 
-                            if(response.code()==200) {
 
+                            if(response.code()>= 400 && response.code() < 599){
 
-                                String emailResponse = response.body().getEmail();
+                                Toast.makeText(Register.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+
                                 Toast.makeText(Register.this, "Welcome" , Toast.LENGTH_SHORT).show();
-
-
                                 Intent in = new Intent(Register.this,MainActivity.class);
                                 startActivity(in);
                                 Register.this.finish();
-
                             }
 
-                            else {
-
-                                Toast.makeText(Register.this, "Server Error", Toast.LENGTH_SHORT).show();
-
-
-                            }
+//                            if(200<= response.code() ) {
+//
+//                                String emailResponse = response.body().getEmail();
+//                            }
+//                            else {
+//
+//                            }
                         }
 
                         @Override
