@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
 
         //For testing purposes.
-        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         //bug fix
         if(session.isLoggedIn()==false){
@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onResponse(Call<ArrayList<RecommendResponseModel>> call, Response<ArrayList<RecommendResponseModel>> response) {
 
                         progressDialog.dismiss();
-                        Toast.makeText(HomeActivity.this, "code" +response.code(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(HomeActivity.this, "code" +response.code(), Toast.LENGTH_SHORT).show();
 
                         if(response.code()>= 400 && response.code() < 599){
 
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
                                 arrayDonors.add(response.body().get(i));
                             }
 
-                            Toast.makeText(HomeActivity.this, arrayDonors.toString() , Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(HomeActivity.this, arrayDonors.toString() , Toast.LENGTH_SHORT).show();
 
                             adapter = new DonorAdapter(HomeActivity.this, arrayDonors);
                             ListView listView = (ListView) findViewById(R.id.donorListView);
