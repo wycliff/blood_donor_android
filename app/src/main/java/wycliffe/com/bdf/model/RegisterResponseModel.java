@@ -1,11 +1,11 @@
 package wycliffe.com.bdf.model;
 
 import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RegisterResponseModel implements Serializable
-{
+public class RegisterResponseModel implements Serializable {
 
     @SerializedName("email")
     @Expose
