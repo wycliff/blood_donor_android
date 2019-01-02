@@ -46,11 +46,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Your Viable Donors");
-
 
         session = new SessionManager(getApplicationContext());
 
@@ -60,9 +58,7 @@ public class HomeActivity extends AppCompatActivity {
 
         session.checkLogin();
 
-
         details = session.getUserDetails();
-
 
         blood_type = details.get("blood_type");
         rhesus = details.get("rhesus_factor");
@@ -77,14 +73,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 progressDialog = new ProgressDialog(HomeActivity.this);
                 progressDialog.setMax(100);
                 progressDialog.setMessage("Its loading....");
                 progressDialog.setTitle("Fetching Server Data");
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.show();
-
 
                 RecommendApiInterface apiService = ApiClient.getClient().create(RecommendApiInterface.class);
 
@@ -118,24 +112,18 @@ public class HomeActivity extends AppCompatActivity {
                                     return false;
                                 }
                             });
-
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ArrayList<RecommendResponseModel>> call, Throwable t) {
-
                         progressDialog.dismiss();
                         Toast.makeText(HomeActivity.this, "Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
-
                     }
                 });
             }
         });
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
