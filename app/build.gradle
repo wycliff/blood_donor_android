@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        config {
+            keyAlias 'y-cliffe'
+            keyPassword '12345y6789z'
+            storePassword '12345y6789z'
+        }
+    }
+    aaptOptions { cruncherEnabled = false }
 }
 
 dependencies {
@@ -31,7 +39,6 @@ dependencies {
 
     // For Retrofit2 HTTP client.
     implementation 'com.squareup.retrofit2:retrofit:2.0.2'
-    //compile 'com.google.code.gson:gson:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
 
     //fastlane
