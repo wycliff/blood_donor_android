@@ -19,7 +19,5 @@ public interface LoginApiInterface {
     @POST("login/") //the endpoint.
 
         //return value is always a parameterized Call<T> object
-    Call<LoginResponseModel> getLogged(@Field("email") String email, @Field("password") String password);
-
-
+    Call<LoginResponseModel> getLogged(@Field("email") String email, @Field("password") String password); // you can use the @Body annotation
 }

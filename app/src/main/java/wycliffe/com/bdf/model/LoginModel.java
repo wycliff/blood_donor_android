@@ -1,7 +1,6 @@
 package wycliffe.com.bdf.model;
 
 
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,7 +14,6 @@ public class LoginModel {
     @Expose
     private String email;
 
-
     public String getEmail() {
         return email;
     }
@@ -23,6 +21,5 @@ public class LoginModel {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }

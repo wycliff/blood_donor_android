@@ -13,17 +13,13 @@ import wycliffe.com.bdf.model.RecommendResponseModel;
 
 
 public interface RecommendApiInterface {
-
-
     @FormUrlEncoded
-    @POST("recommend/") //the endpoint.
-
-        //return value is always a parameterized Call<T> object
+    @POST("recommend/")
     Call<ArrayList<RecommendResponseModel>> getRecommendations(
-                                                    @Field("blood_type") String blood_type,
-                                                    @Field("rhesus_factor") String rhesus, @Field("age") String age,
-                                                    @Field("current_location") String current_location,@Field("gender") String gender,
-                                                    @Field("weight") String weight );
+            @Field("blood_type") String blood_type,
+            @Field("rhesus_factor") String rhesus, @Field("age") String age,
+            @Field("current_location") String current_location, @Field("gender") String gender,
+            @Field("weight") String weight);
 }
 
 

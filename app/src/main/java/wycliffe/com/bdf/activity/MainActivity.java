@@ -34,26 +34,12 @@ import wycliffe.com.bdf.rest.RecommendApiInterface;
 public class MainActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
-    /*===========================Session and drawer =================================================*/
-    // Session Manager Class
     public SessionManager session;
-
     HashMap<String, String> details = new HashMap<>();
-
-    String blood_type, gender,current_location, weight, age, rhesus;
-    //Boolean rhesus;
+    String blood_type, gender, current_location, weight, age, rhesus;
     Button btngetDonors;
+    ArrayAdapter<String> adapter;
 
-     ArrayAdapter<String> adapter;
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -66,12 +52,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // get all this code out of here
 
-        // The toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
-//        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
@@ -83,23 +67,18 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-/*============================================== Shared preference applied here====================================================*/
-        // Session class instance . very important.
+
         session = new SessionManager(getApplicationContext());
 
         //For testing purposes.
         Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
 
-
         //bug fix
-        if(session.isLoggedIn()==false){
-
+        if (session.isLoggedIn() == false) {
             //Killer
             MainActivity.this.finish();
-
         }
-
 
         /**
          * Call this function whenever you want to check user login
@@ -110,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         //get details from shared pref
-        details=session.getUserDetails();
+        details = session.getUserDetails();
 
         //To send
-        blood_type= details.get("blood_type");
+        blood_type = details.get("blood_type");
         rhesus = details.get("rhesus_factor");
         age = details.get("age");
         weight = details.get("weight");
@@ -121,15 +100,9 @@ public class MainActivity extends AppCompatActivity {
         gender = details.get("gender");
 
 
-//--------------------------------------------- Communicate with server
-
-
-//        btngetDonors = (Button) findViewById(R.id.recommendButton);
-//
-         btngetDonors.setOnClickListener(new View.OnClickListener() {
+        btngetDonors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setMax(100);
@@ -138,59 +111,15 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.show();
 
-
                 //prepare call in retrofit 2.0
                 // get type retrofit object stored into service.
                 RecommendApiInterface apiService = ApiClient.getClient().create(RecommendApiInterface.class);
-
-//        Map<String, String> postParams  = new HashMap<>();
-//        postParams.put("email",email);
-
-//                Call<RecommendResponseModel> call = apiService.getRecommendations (blood_type, rhesus, age,current_location, gender, weight);
-//
-//                call.enqueue(new Callback<RecommendResponseModel>() {
-//                    @Override
-//                    public void onResponse(Call<RecommendResponseModel> call, Response<RecommendResponseModel> response) {
-//
-//                        //progressDialog.dismiss();
-//                        Toast.makeText(MainActivity.this, "code" +response.code(), Toast.LENGTH_SHORT).show();
-//
-//                        if(response.code()==200) {
-//
-//                            //To be displayed in Clickable LView (Needs and adapter)
-//                            Toast.makeText(MainActivity.this, response.body().toString() , Toast.LENGTH_SHORT).show();
-//
-//                        }
-//
-//                        else {
-//
-//                            Toast.makeText(MainActivity.this,response.message(), Toast.LENGTH_SHORT).show();
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<RecommendResponseModel> call, Throwable t) {
-//
-//                        progressDialog.dismiss();
-//                        Toast.makeText(MainActivity.this," Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
-
-                /*=====================================================================================================================================*/
-
-                //===== Displaying List View
-               // adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, list of);
 
             }
         });
 
 
-
-
-
-    }// end onCreate()
+    }
 
 
     @Override
@@ -200,17 +129,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void logout() {
 
-    //Method that logs you out
-    public void logout(){
-
-        Toast.makeText(getApplicationContext(),"goodbye!",Toast.LENGTH_LONG).show();
-
-        // Clear the session data
-        // This will clear all session data and
-        // redirect user to LoginActivity
+        Toast.makeText(getApplicationContext(), "goodbye!", Toast.LENGTH_LONG).show();
         session.logoutUser();
-
 
         //Killer
         MainActivity.this.finish();
@@ -263,11 +185,7 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            //Button btngetDonors = (Button) rootView.findViewById(R.id.recommendButton);
             ListView donorListView = (ListView) rootView.findViewById(R.id.donorListView);
-
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
             // View used in my
             return rootView;

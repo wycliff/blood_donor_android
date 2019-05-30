@@ -9,10 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-
     public static final String BASE_URL ="https://bdf.herokuapp.com/myrest/users/";
     private static Retrofit retrofit = null;
-
 
     public static Retrofit getClient(){
         if (retrofit == null){
@@ -22,7 +20,6 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        // Return type is Retrofit
         return retrofit;
     }
 }

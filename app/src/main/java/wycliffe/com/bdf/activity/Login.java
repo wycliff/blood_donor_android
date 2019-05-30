@@ -28,15 +28,15 @@ import wycliffe.com.bdf.rest.LoginApiInterface;
 
 public class Login extends AppCompatActivity {
 
-
-    EditText etEmail,etPassword;
+    // view
+    EditText etEmail, etPassword;
     Button btnLogin, btnToReg;
     CheckBox cbShowPassword;
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
+
+    //other
     String email, password;
     ProgressDialog progressDialog;
-
-    // Session Manager Class
     SessionManager session;
 
 
@@ -45,138 +45,77 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnLogin = (Button) findViewById(R.id.buttonLogin);
-        btnToReg = (Button) findViewById(R.id.btnToRegister);
+        btnLogin = findViewById(R.id.buttonLogin);
+        btnToReg = findViewById(R.id.btnToRegister);
         btnToReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Login.this,Register.class);
+                Intent intent = new Intent(Login.this, Register.class);
                 startActivity(intent);
                 Login.this.finish();
             }
         });
 
 
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                //intent which to next
-//                Intent in = new Intent(Login.this,MainActivity.class);
-//                startActivity(in);
-//                Login.this.finish();
-//            }
-//        });
-
-
-//---------------------------------------New instance of the shared preference class-------------------------------------------------------------------------------------------
-                // Session Manager
-                session = new SessionManager(getApplicationContext());
-        // Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
-
-//-
-//----------------------------------------------------------------------------------------------------------------------------------------
-
-        //Getting the email from user
-        etEmail = (EditText) findViewById(R.id.etEmail);
-
-        //Getting the password from user
-        etPassword = (EditText) findViewById(R.id.etPassword);
-
-        //Getting the login Button
-        btnLogin = (Button)findViewById(R.id.buttonLogin);
-
-
-//-------------------------------------------The check box---------------------------------------------------------------------------
-        //show password check box
-        cbShowPassword = (CheckBox) findViewById(R.id.showPassword);
+        session = new SessionManager(getApplicationContext());
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.buttonLogin);
+        cbShowPassword = findViewById(R.id.showPassword);
 
         cbShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
-                // checkbox status is changed from uncheck to checked.
                 if (!isChecked) {
-                    // show password
                     etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
-                else {
-                    // hide password
+                } else {
                     etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
             }
         });
 
-//==========================================Handling foalting Labels=============================================================================
-
-        inputLayoutEmail = (TextInputLayout) findViewById(R.id.input_layout_email);
-        inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
-
-        //All the <TextInput> editables
-//        etEmail.addTextChangedListener(new MyTextWatcher(etEmail));
-//        etPassword.addTextChangedListener(new MyTextWatcher(etPassword));
-
-//============== REST
-
+        inputLayoutEmail = findViewById(R.id.input_layout_email);
+        inputLayoutPassword = findViewById(R.id.input_layout_password);
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //saving them into a String
                 email = etEmail.getText().toString().trim();
                 password = etPassword.getText().toString().trim();
 
-                if(email.trim().length() > 0 && password.trim().length() > 0) {
+                if (email.trim().length() > 0 && password.trim().length() > 0) {
 
 
-                //=========================================================  connection to the API
+                    progressDialog = new ProgressDialog(Login.this);
+                    progressDialog.setMax(100);
+                    progressDialog.setMessage("Its loading....");
+                    progressDialog.setTitle("Fetching Server Data");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.show();
 
-                progressDialog = new ProgressDialog(Login.this);
-                progressDialog.setMax(100);
-                progressDialog.setMessage("Its loading....");
-                progressDialog.setTitle("Fetching Server Data");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progressDialog.show();
-
-
-
-                    //prepare call in retrofit 2.0
-                    // get type retrofit object stored into service.
                     LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class);
-
-
-                    // Giving it the info from the edit text views.
-                    Call<LoginResponseModel> call = apiService.getLogged(email,password);
-
+                    Call<LoginResponseModel> call = apiService.getLogged(email, password);
                     call.enqueue(new Callback<LoginResponseModel>() {
                         @Override
                         public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
 
                             progressDialog.dismiss();
-                            Toast.makeText(Login.this, "code"+response.code(), Toast.LENGTH_SHORT).show();
 
-                            if(response.code()==200) {
-
-
+                            if (response.code() == 200) {
                                 String emailResponse = response.body().getEmail();
                                 Toast.makeText(Login.this, "Welcome" + response.body().getFullName(), Toast.LENGTH_SHORT).show();
 
 
-                                        session.createLoginSession(response.body());
+                                session.createLoginSession(response.body());
 
-                                        Intent in = new Intent(Login.this,HomeActivity.class);
-                                        startActivity(in);
-                                        Login.this.finish();
-                            }
-
-                            else {
-
+                                Intent in = new Intent(Login.this, HomeActivity.class);
+                                startActivity(in);
+                                Login.this.finish();
+                            } else {
                                 Toast.makeText(Login.this, " Server error", Toast.LENGTH_SHORT).show();
-
-
                             }
                         }
 
@@ -191,23 +130,13 @@ public class Login extends AppCompatActivity {
                     });
 
 
-
-
-
-
-
-                }else{
-                    //Toast.makeText(Login.this,"Email/ Password fields cannot be empty",Toast.LENGTH_LONG).show();
-
-                    //Setting error on view
-                    if(email.trim().length() <= 0 && password.trim().length() <= 0) {
+                } else {
+                    if (email.trim().length() <= 0 && password.trim().length() <= 0) {
                         inputLayoutEmail.setError("Email field cannot be empty");
                         inputLayoutPassword.setError("Password Required");
-                    }
-                    else if(password.trim().length() <= 0) {
+                    } else if (password.trim().length() <= 0) {
                         inputLayoutPassword.setError("Password Required");
-                    }
-                    else{
+                    } else {
                         inputLayoutEmail.setError("Email field cannot be empty");
 
                     }
@@ -218,16 +147,12 @@ public class Login extends AppCompatActivity {
         });
 
 
+    }
 
-  } // End onCreate()
-
-    //======================Methods/ classes handling the floating Labels====================================================================
-
-    //------------------------------------------- Validators ---------------------------------------------------------------------------------
     private boolean validateEmail() {
         String email = etEmail.getText().toString().trim();
 
-        if (email.isEmpty() || !isValidEmail(email) ) {
+        if (email.isEmpty() || !isValidEmail(email)) {
             inputLayoutEmail.setError("Enter the email");
             //requestFocus(etEmail);
             return false;
@@ -243,47 +168,42 @@ public class Login extends AppCompatActivity {
             inputLayoutPassword.setError("Enter the password");
             //requestFocus(etPassword);
             return false;
-        }
-        else {
+        } else {
 
             inputLayoutPassword.setErrorEnabled(false);
         }
 
         return true;
-    } //Each needs its own validator
+    }
 
-    //checks the pattern of the email.
     private static boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
 
-//---------------------------  Wactches text activity and calls needed validator --------------------------------------------------------
+    private class MyTextWatcher implements TextWatcher {
 
-private class MyTextWatcher implements TextWatcher {
+        public View view;
 
-    public View view;
+        public MyTextWatcher(View view) {
+            this.view = view;
+        }
 
-    public MyTextWatcher(View view) {
-        this.view = view;
-    }
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-    }
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-    }
-
-    public void afterTextChanged(Editable editable) {
-        switch (view.getId()) {
-            // Done for each editText view and each should have a validate(), some are similar create validateEdit()
-            case R.id.etEmail:
-                validateEmail();
-                break;
-            case R.id.etPassword:
-                validatePassword();
-                break;
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.etEmail:
+                    validateEmail();
+                    break;
+                case R.id.etPassword:
+                    validatePassword();
+                    break;
+            }
         }
     }
 }
-} // End class
