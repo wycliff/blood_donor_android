@@ -2,9 +2,9 @@ package wycliffe.com.bdf.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -63,13 +63,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//        }
-
+        Toolbar toolbar = findViewById(R.id.toolbar1);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setTitle("Register here");
@@ -83,7 +77,7 @@ public class Register extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhoneReg);
 
 
-        btnRegister = (Button) findViewById(R.id.registerButton);
+        btnRegister = findViewById(R.id.registerButton);
 
         cbShowPassword = findViewById(R.id.showPasswordreg);
 
@@ -132,7 +126,6 @@ public class Register extends AppCompatActivity {
         myBloodSpinner = findViewById(R.id.myBloodGroupSpinner);
         ArrayAdapter<String> blood_type_adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.single_blood_type, R.id.single_blood_type, blood_type_options);
         myBloodSpinner.setAdapter(blood_type_adapter);
-
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

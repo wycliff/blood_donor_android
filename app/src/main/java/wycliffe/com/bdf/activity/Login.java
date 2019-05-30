@@ -97,19 +97,14 @@ public class Login extends AppCompatActivity {
                     progressDialog.show();
 
                     LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class);
-
                     Call<LoginResponseModel> call = apiService.getLogged(email, password);
-
                     call.enqueue(new Callback<LoginResponseModel>() {
                         @Override
                         public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
 
                             progressDialog.dismiss();
-                            Toast.makeText(Login.this, "code" + response.code(), Toast.LENGTH_SHORT).show();
 
                             if (response.code() == 200) {
-
-
                                 String emailResponse = response.body().getEmail();
                                 Toast.makeText(Login.this, "Welcome" + response.body().getFullName(), Toast.LENGTH_SHORT).show();
 
@@ -120,10 +115,7 @@ public class Login extends AppCompatActivity {
                                 startActivity(in);
                                 Login.this.finish();
                             } else {
-
                                 Toast.makeText(Login.this, " Server error", Toast.LENGTH_SHORT).show();
-
-
                             }
                         }
 

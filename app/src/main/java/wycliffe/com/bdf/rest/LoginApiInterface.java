@@ -20,5 +20,4 @@ public interface LoginApiInterface {
 
         //return value is always a parameterized Call<T> object
     Call<LoginResponseModel> getLogged(@Field("email") String email, @Field("password") String password); // you can use the @Body annotation
-
 }
