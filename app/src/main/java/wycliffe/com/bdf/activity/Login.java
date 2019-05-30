@@ -2,8 +2,8 @@ package wycliffe.com.bdf.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,7 +21,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import wycliffe.com.bdf.R;
-import wycliffe.com.bdf.model.LoginModel;
 import wycliffe.com.bdf.model.LoginResponseModel;
 import wycliffe.com.bdf.rest.ApiClient;
 import wycliffe.com.bdf.rest.LoginApiInterface;
