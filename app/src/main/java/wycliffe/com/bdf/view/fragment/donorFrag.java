@@ -1,4 +1,4 @@
-package wycliffe.com.bdf.fragment;
+package wycliffe.com.bdf.view.fragment;
 
 import android.content.Context;
 import android.net.Uri;

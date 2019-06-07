@@ -1,4 +1,4 @@
-package wycliffe.com.bdf.activity;
+package wycliffe.com.bdf.other;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import java.util.HashMap;
 
 import wycliffe.com.bdf.model.LoginResponseModel;
+import wycliffe.com.bdf.view.activity.Login;
 
 /**
  * Created by Wycliffe on 12/27/2017.

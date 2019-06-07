@@ -4,7 +4,7 @@
     <!--android:id="@+id/constraintLayout"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
-    <!--tools:context="wycliffe.com.bdf.activity.MainActivity$PlaceholderFragment">-->
+    <!--tools:context="wycliffe.com.bdf.view.activity.MainActivity$PlaceholderFragment">-->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

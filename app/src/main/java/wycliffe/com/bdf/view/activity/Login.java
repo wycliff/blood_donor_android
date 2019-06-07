@@ -1,4 +1,4 @@
-package wycliffe.com.bdf.activity;
+package wycliffe.com.bdf.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wycliffe.com.bdf.R;
 import wycliffe.com.bdf.model.LoginResponseModel;
+import wycliffe.com.bdf.other.SessionManager;
 import wycliffe.com.bdf.rest.ApiClient;
 import wycliffe.com.bdf.rest.LoginApiInterface;
 
@@ -49,7 +50,6 @@ public class Login extends AppCompatActivity {
         btnToReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(Login.this, Register.class);
                 startActivity(intent);
                 Login.this.finish();
@@ -144,6 +144,11 @@ public class Login extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    private void initViews(){
 
 
     }

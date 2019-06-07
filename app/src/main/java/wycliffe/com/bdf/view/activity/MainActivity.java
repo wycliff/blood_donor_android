@@ -1,4 +1,4 @@
-package wycliffe.com.bdf.activity;
+package wycliffe.com.bdf.view.activity;
 
 import android.app.ProgressDialog;
 import com.google.android.material.tabs.TabLayout;
@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 import wycliffe.com.bdf.R;
+import wycliffe.com.bdf.other.SessionManager;
 import wycliffe.com.bdf.rest.ApiClient;
 import wycliffe.com.bdf.rest.RecommendApiInterface;
 

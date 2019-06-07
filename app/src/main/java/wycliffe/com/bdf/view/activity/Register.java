@@ -1,4 +1,4 @@
-package wycliffe.com.bdf.activity;
+package wycliffe.com.bdf.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

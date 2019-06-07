@@ -1,13 +1,11 @@
 package wycliffe.com.bdf.adapter;
 
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 
@@ -25,11 +23,11 @@ public class DonorAdapter extends ArrayAdapter<RecommendResponseModel> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.single_donor_item, parent, false);
         }
-        TextView Name = (TextView) convertView.findViewById(R.id.donorName);
-        TextView BloodType = (TextView) convertView.findViewById(R.id.donorBloodGroup);
-        TextView Rhesus = (TextView) convertView.findViewById(R.id.donorRhesus);
-        TextView Phone = (TextView) convertView.findViewById(R.id.donorPhone);
-        TextView location = (TextView) convertView.findViewById(R.id.donorLoc);
+        TextView Name = convertView.findViewById(R.id.donorName);
+        TextView BloodType = convertView.findViewById(R.id.donorBloodGroup);
+        TextView Rhesus = convertView.findViewById(R.id.donorRhesus);
+        TextView Phone = convertView.findViewById(R.id.donorPhone);
+        TextView location = convertView.findViewById(R.id.donorLoc);
 
         Name.setText(donor.getFullName());
         BloodType.setText(donor.getBloodType());

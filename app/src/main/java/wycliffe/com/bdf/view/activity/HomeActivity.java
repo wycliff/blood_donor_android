@@ -1,4 +1,4 @@
-package wycliffe.com.bdf.activity;
+package wycliffe.com.bdf.view.activity;
 
 import android.app.ProgressDialog;
 
@@ -22,6 +22,7 @@ import retrofit2.Response;
 import wycliffe.com.bdf.R;
 import wycliffe.com.bdf.adapter.DonorAdapter;
 import wycliffe.com.bdf.model.RecommendResponseModel;
+import wycliffe.com.bdf.other.SessionManager;
 import wycliffe.com.bdf.rest.ApiClient;
 import wycliffe.com.bdf.rest.RecommendApiInterface;
 
