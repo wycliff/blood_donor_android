@@ -50,10 +50,8 @@ public class LoginLearn extends AppCompatActivity {
                     binding.lblEmailAnswer.setText(loginUserLearn.getStrEmailAddress());
                     binding.lblPasswordAnswer.setText(loginUserLearn.getStrPassword());
                 }
-
             }
         });
-
     }
 
     private void initBinding (){

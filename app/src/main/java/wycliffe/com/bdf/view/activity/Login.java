@@ -2,8 +2,6 @@ package wycliffe.com.bdf.view.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,6 +14,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -78,79 +80,59 @@ public class Login extends AppCompatActivity {
         inputLayoutPassword = findViewById(R.id.input_layout_password);
 
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnLogin.setOnClickListener(view -> {
 
-                email = etEmail.getText().toString().trim();
-                password = etPassword.getText().toString().trim();
+            email = etEmail.getText().toString().trim();
+            password = etPassword.getText().toString().trim();
 
-                if (email.trim().length() > 0 && password.trim().length() > 0) {
+            if (email.trim().length() > 0 && password.trim().length() > 0) {
 
 
-                    progressDialog = new ProgressDialog(Login.this);
-                    progressDialog.setMax(100);
-                    progressDialog.setMessage("Its loading....");
-                    progressDialog.setTitle("Fetching Server Data");
-                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    progressDialog.show();
+                progressDialog = new ProgressDialog(Login.this);
+                progressDialog.setMax(100);
+                progressDialog.setMessage("Its loading...");
+                progressDialog.setTitle("Fetching Server Data");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressDialog.show();
 
-                    LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class);
-                    Call<LoginResponseModel> call = apiService.getLogged(email, password);
-                    call.enqueue(new Callback<LoginResponseModel>() {
-                        @Override
-                        public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
-
-                            progressDialog.dismiss();
-
-                            if (response.code() == 200) {
-                                String emailResponse = response.body().getEmail();
-                                Toast.makeText(Login.this, "Welcome" + response.body().getFullName(), Toast.LENGTH_SHORT).show();
-
-
-                                session.createLoginSession(response.body());
-
-                                Intent in = new Intent(Login.this, HomeActivity.class);
-                                startActivity(in);
-                                Login.this.finish();
-                            } else {
-                                Toast.makeText(Login.this, " Server error", Toast.LENGTH_SHORT).show();
-                            }
+                LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class);
+                Call<LoginResponseModel> call = apiService.getLogged(email, password);
+                call.enqueue(new Callback<LoginResponseModel>() {
+                    @Override
+                    public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
+                        progressDialog.dismiss();
+                        if (response.code() == 200) {
+                            String emailResponse = response.body().getEmail();
+                            Toast.makeText(Login.this, "Welcome" + response.body().getFullName(), Toast.LENGTH_SHORT).show();
+                            session.createLoginSession(response.body());
+                            Intent in = new Intent(Login.this, HomeActivity.class);
+                            startActivity(in);
+                            Login.this.finish();
+                        } else {
+                            Toast.makeText(Login.this, " Server error", Toast.LENGTH_SHORT).show();
                         }
-
-                        @Override
-                        public void onFailure(Call<LoginResponseModel> call, Throwable t) {
-
-                            progressDialog.dismiss();
-                            Toast.makeText(Login.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
-
-
-                        }
-                    });
-
-
-                } else {
-                    if (email.trim().length() <= 0 && password.trim().length() <= 0) {
-                        inputLayoutEmail.setError("Email field cannot be empty");
-                        inputLayoutPassword.setError("Password Required");
-                    } else if (password.trim().length() <= 0) {
-                        inputLayoutPassword.setError("Password Required");
-                    } else {
-                        inputLayoutEmail.setError("Email field cannot be empty");
-
                     }
+
+                    @Override
+                    public void onFailure(Call<LoginResponseModel> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(Login.this, " Failed to establish connection to server ", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                if (email.trim().length() <= 0 && password.trim().length() <= 0) {
+                    inputLayoutEmail.setError("Email field cannot be empty");
+                    inputLayoutPassword.setError("Password Required");
+                } else if (password.trim().length() <= 0) {
+                    inputLayoutPassword.setError("Password Required");
+                } else {
+                    inputLayoutEmail.setError("Email field cannot be empty");
                 }
-
-
             }
         });
-
-
     }
 
-    private void initViews(){
-
-
+    private void initViews() {
     }
 
     private boolean validateEmail() {
@@ -173,10 +155,8 @@ public class Login extends AppCompatActivity {
             //requestFocus(etPassword);
             return false;
         } else {
-
             inputLayoutPassword.setErrorEnabled(false);
         }
-
         return true;
     }
 
@@ -184,21 +164,15 @@ public class Login extends AppCompatActivity {
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-
     private class MyTextWatcher implements TextWatcher {
-
         public View view;
-
         public MyTextWatcher(View view) {
             this.view = view;
         }
-
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
-
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
-
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
                 case R.id.etEmail:

@@ -126,7 +126,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/lblEmailAnswer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
 </layout>
