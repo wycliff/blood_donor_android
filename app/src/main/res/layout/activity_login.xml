@@ -126,6 +126,8 @@
                     android:text="LOGIN"
                     android:textColor="#fff" />
 
+
+
                 <Button
                     android:id="@+id/btnToRegister"
                     style="?android:attr/borderlessButtonStyle"
@@ -139,6 +141,16 @@
                     android:text="Not registered? CLICK HERE"
                     android:textAllCaps="false"
                     android:textSize="15sp" />
+
+                <com.baoyachi.stepview.HorizontalStepView
+                    android:id="@+id/step_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@+id/btnToRegister"
+                    android:visibility="gone"
+                    />
 
             </RelativeLayout>
         </FrameLayout>

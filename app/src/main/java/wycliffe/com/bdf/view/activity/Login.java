@@ -16,8 +16,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.baoyachi.stepview.HorizontalStepView;
+import com.baoyachi.stepview.bean.StepBean;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,18 +41,24 @@ public class Login extends AppCompatActivity {
     Button btnLogin, btnToReg;
     CheckBox cbShowPassword;
     private TextInputLayout inputLayoutEmail, inputLayoutPassword;
+    HorizontalStepView stepViewDNote;
 
     //other
     String email, password;
     ProgressDialog progressDialog;
     SessionManager session;
+    List<StepBean> stepsBeanList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        initViews();
+    }
 
+    private void initViews() {
+        initStepBar();
         btnLogin = findViewById(R.id.buttonLogin);
         btnToReg = findViewById(R.id.btnToRegister);
         btnToReg.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +144,30 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void initViews() {
+    private void initStepBar() {
+        stepViewDNote = findViewById(R.id.step_view);
+        stepsBeanList = new ArrayList<>();
+        StepBean pending  = new StepBean("pending",1);
+        StepBean review = new StepBean("review",0);
+        StepBean completed = new StepBean("completed",-1);
+        stepsBeanList.add(pending);
+        stepsBeanList.add(review);
+        stepsBeanList.add(completed);
+
+        stepViewDNote.setStepViewTexts(stepsBeanList)
+                .setTextSize(12)//set textSize
+                //lines
+                .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))//StepsViewIndicator
+                .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(this, R.color.uncompleted_color))//StepsViewIndicator
+                .setStepViewComplectedTextColor(ContextCompat.getColor(this, android.R.color.black))//StepsView text
+                .setStepViewUnComplectedTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))//StepsView text
+                .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.complted))//stepsViewIndicator CompleteIcon
+                .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.default_icon))//StepsViewIndicator DefaultIcon
+                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.attention));//StepsViewIndicator AttentionIcon
+    }
+
+    private void changeStepStatus(){
+        stepsBeanList.get(0).setState(0);
     }
 
     private boolean validateEmail() {
@@ -140,7 +175,6 @@ public class Login extends AppCompatActivity {
 
         if (email.isEmpty() || !isValidEmail(email)) {
             inputLayoutEmail.setError("Enter the email");
-            //requestFocus(etEmail);
             return false;
         } else {
             inputLayoutEmail.setErrorEnabled(false);
@@ -166,13 +200,17 @@ public class Login extends AppCompatActivity {
 
     private class MyTextWatcher implements TextWatcher {
         public View view;
+
         public MyTextWatcher(View view) {
             this.view = view;
         }
+
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
+
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
         }
+
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
                 case R.id.etEmail:

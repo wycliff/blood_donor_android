@@ -80,6 +80,9 @@ dependencies {
     // Lifecycle components
     implementation "android.arch.lifecycle:extensions:$life_versions"
     annotationProcessor "android.arch.lifecycle:compiler:$life_versions"
+
+    //Step progress bar
+    implementation 'com.github.baoyachi:StepView:1.9'
 }
 repositories {
     mavenCentral()
