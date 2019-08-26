@@ -107,7 +107,7 @@ public class Login extends AppCompatActivity {
                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                 progressDialog.show();
 
-                LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class);
+                LoginApiInterface apiService = ApiClient.getClient().create(LoginApiInterface.class); // retrofit instance.create()
                 Call<LoginResponseModel> call = apiService.getLogged(email, password);
                 call.enqueue(new Callback<LoginResponseModel>() {
                     @Override
@@ -160,10 +160,10 @@ public class Login extends AppCompatActivity {
                 .setStepsViewIndicatorCompletedLineColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))//StepsViewIndicator
                 .setStepsViewIndicatorUnCompletedLineColor(ContextCompat.getColor(this, R.color.uncompleted_color))//StepsViewIndicator
                 .setStepViewComplectedTextColor(ContextCompat.getColor(this, android.R.color.black))//StepsView text
-                .setStepViewUnComplectedTextColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))//StepsView text
+                .setStepViewUnComplectedTextColor(ContextCompat.getColor(this, android.R.color.black))//StepsView text
                 .setStepsViewIndicatorCompleteIcon(ContextCompat.getDrawable(this, R.drawable.complted))//stepsViewIndicator CompleteIcon
                 .setStepsViewIndicatorDefaultIcon(ContextCompat.getDrawable(this, R.drawable.default_icon))//StepsViewIndicator DefaultIcon
-                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.attention));//StepsViewIndicator AttentionIcon
+                .setStepsViewIndicatorAttentionIcon(ContextCompat.getDrawable(this, R.drawable.default_icon));//StepsViewIndicator AttentionIcon
     }
 
     private void changeStepStatus(){

@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by Wycliffe on 12/27/2017.
  */
-
+// Retrofit instance
 public class ApiClient {
 
     public static final String BASE_URL ="https://bdf.herokuapp.com/myrest/users/";
