@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/wycliffenyakemwa/AndroidStudioProjects/blood_donor_android/app/ycliffe-keystore.jks')
+            keyAlias = 'ycliffe'
+            keyPassword '12345y6789z'
+            storePassword '12345y6789z'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "wycliffe.com.bdf"
@@ -36,5 +44,4 @@ dependencies {
 
     //fastlane
     androidTestImplementation 'tools.fastlane:screengrab:1.0.0'
-
 }
